@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   Card,
@@ -6,41 +6,41 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { SignUpTab } from "./_components/sign-up-tab"
-import { SignInTab } from "./_components/sign-in-tab"
-import { Separator } from "@/components/ui/separator"
-import { SocialAuthButtons } from "./_components/social-auth-buttons"
-import { useEffect, useState } from "react"
-import { authClient } from "@/lib/auth/auth-client"
-import { useRouter } from "next/navigation"
-import { EmailVerification } from "./_components/email-verification"
-import { ForgotPassword } from "./_components/forgot-password"
+} from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { SignUpTab } from "./_components/sign-up-tab";
+import { SignInTab } from "./_components/sign-in-tab";
+import { Separator } from "@/components/ui/separator";
+import { SocialAuthButtons } from "./_components/social-auth-buttons";
+import { useEffect, useState } from "react";
+import { authClient } from "@/lib/auth/auth-client";
+import { useRouter } from "next/navigation";
+import { EmailVerification } from "./_components/email-verification";
+import { ForgotPassword } from "./_components/forgot-password";
 
-type Tab = "signin" | "signup" | "email-verification" | "forgot-password"
+type Tab = "signin" | "signup" | "email-verification" | "forgot-password";
 
 export default function LoginPage() {
-  const router = useRouter()
-  const [email, setEmail] = useState("")
-  const [selectedTab, setSelectedTab] = useState<Tab>("signin")
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [selectedTab, setSelectedTab] = useState<Tab>("signin");
 
   useEffect(() => {
-    authClient.getSession().then(session => {
-      if (session.data != null) router.push("/")
-    })
-  }, [router])
+    authClient.getSession().then((session) => {
+      if (session.data != null) router.push("/");
+    });
+  }, [router]);
 
   function openEmailVerificationTab(email: string) {
-    setEmail(email)
-    setSelectedTab("email-verification")
+    setEmail(email);
+    setSelectedTab("email-verification");
   }
 
   return (
     <Tabs
       value={selectedTab}
-      onValueChange={t => setSelectedTab(t as Tab)}
-      className="max-auto w-full my-6 px-4"
+      onValueChange={(t) => setSelectedTab(t as Tab)}
+      className="mx-auto max-w-3xl my-6 px-4"
     >
       {(selectedTab === "signin" || selectedTab === "signup") && (
         <TabsList>
@@ -107,5 +107,5 @@ export default function LoginPage() {
         </Card>
       </TabsContent>
     </Tabs>
-  )
+  );
 }

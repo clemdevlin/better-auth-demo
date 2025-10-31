@@ -1,4 +1,4 @@
-import type { NextConfig } from "next"
+import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
@@ -11,11 +11,11 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "cdn.discordapp.com",
-        pathname: "/avatars/**",
+        pathname: "/embed/**",
       },
     ],
   },
   /* config options here */
-}
+};
 
-export default nextConfig
+export default nextConfig;
