@@ -1,13 +1,13 @@
-import { Badge } from "@/components/ui/badge"
+import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { auth } from "@/lib/auth/auth"
+} from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { auth } from "@/lib/auth/auth";
 import {
   ArrowLeft,
   Key,
@@ -16,24 +16,24 @@ import {
   Shield,
   Trash2,
   User,
-} from "lucide-react"
-import { headers } from "next/headers"
-import Image from "next/image"
-import Link from "next/link"
-import { redirect } from "next/navigation"
-import { ProfileUpdateForm } from "./_components/profile-update-form"
-import { ReactNode, Suspense } from "react"
-import { SetPasswordButton } from "./_components/set-password-button"
-import { ChangePasswordForm } from "./_components/change-password-form"
-import { SessionManagement } from "./_components/session-management"
-import { AccountLinking } from "./_components/account-linking"
-import { AccountDeletion } from "./_components/account-deletion"
-import { TwoFactorAuth } from "./_components/two-factor-auth"
-import { PasskeyManagement } from "./_components/passkey-management"
+} from "lucide-react";
+import { headers } from "next/headers";
+import Image from "next/image";
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import { ProfileUpdateForm } from "./_components/profile-update-form";
+import { ReactNode, Suspense } from "react";
+import { SetPasswordButton } from "./_components/set-password-button";
+import { ChangePasswordForm } from "./_components/change-password-form";
+import { SessionManagement } from "./_components/session-management";
+import { AccountLinking } from "./_components/account-linking";
+import { AccountDeletion } from "./_components/account-deletion";
+import { TwoFactorAuth } from "./_components/two-factor-auth";
+import { PasskeyManagement } from "./_components/passkey-management";
 
 export default async function ProfilePage() {
-  const session = await auth.api.getSession({ headers: await headers() })
-  if (session == null) return redirect("/auth/login")
+  const session = await auth.api.getSession({ headers: await headers() });
+  if (session == null) return redirect("/auth/login");
 
   return (
     <div className="max-w-4xl mx-auto my-6 px-4">
@@ -133,14 +133,16 @@ export default async function ProfilePage() {
         </TabsContent>
       </Tabs>
     </div>
-  )
+  );
 }
 
 async function LinkedAccountsTab() {
-  const accounts = await auth.api.listUserAccounts({ headers: await headers() })
+  const accounts = await auth.api.listUserAccounts({
+    headers: await headers(),
+  });
   const nonCredentialAccounts = accounts.filter(
-    a => a.providerId !== "credential"
-  )
+    (a) => a.providerId !== "credential"
+  );
 
   return (
     <Card>
@@ -148,14 +150,14 @@ async function LinkedAccountsTab() {
         <AccountLinking currentAccounts={nonCredentialAccounts} />
       </CardContent>
     </Card>
-  )
+  );
 }
 async function SessionsTab({
   currentSessionToken,
 }: {
-  currentSessionToken: string
+  currentSessionToken: string;
 }) {
-  const sessions = await auth.api.listSessions({ headers: await headers() })
+  const sessions = await auth.api.listSessions({ headers: await headers() });
 
   return (
     <Card>
@@ -166,22 +168,24 @@ async function SessionsTab({
         />
       </CardContent>
     </Card>
-  )
+  );
 }
 
 async function SecurityTab({
   email,
   isTwoFactorEnabled,
 }: {
-  email: string
-  isTwoFactorEnabled: boolean
+  email: string;
+  isTwoFactorEnabled: boolean;
 }) {
   const [passkeys, accounts] = await Promise.all([
     auth.api.listPasskeys({ headers: await headers() }),
     auth.api.listUserAccounts({ headers: await headers() }),
-  ])
+  ]);
 
-  const hasPasswordAccount = accounts.some(a => a.providerId === "credential")
+  const hasPasswordAccount = accounts.some(
+    (a) => a.providerId === "credential"
+  );
 
   return (
     <div className="space-y-6">
@@ -233,13 +237,13 @@ async function SecurityTab({
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
 
-function LoadingSuspense({ children }: { children: ReactNode }) {
+export function LoadingSuspense({ children }: { children: ReactNode }) {
   return (
     <Suspense fallback={<Loader2Icon className="size-20 animate-spin" />}>
       {children}
     </Suspense>
-  )
+  );
 }
